@@ -8,7 +8,7 @@ def crearMatrizAlumnos():
     continuar = "si"
     contador = 1
 
-    while continuar == "si":
+    while continuar.lower() == "si":
         print("\nPersona", contador)
         
         legajo = input("Ingrese el legajo del alumno: ")
@@ -16,7 +16,7 @@ def crearMatrizAlumnos():
         print(legajoEnmascarado)
         nombre = input("Nombre Alumno: ")
         apellidoAlumno = input("Apellido : ")
-        #PODEMOS VALIDAR EL DNI
+
         dni = int(input("DNI: "))
         mail = input("Ingrese el email del alumno: ")
         patron = r'\@'
@@ -45,52 +45,69 @@ def crearMatrizAlumnos():
     
     return matriz_datos
 
-#crear_matrizAlumnos()
+
 
 #CREACIÓN DE LA MATRIZ EVALUACIÓN
-def crearMatrizEvaluaciones():
+def CrearMatrizEvaluaciones():
     # Inicializar la matriz
-    matriz_datos = []
+    matrizEvaluaciones = []
 
     continuar = "si"
     contador = 1
 
-    while continuar == "si":
+    while continuar.lower() == "si":
         print("\nEvaluación", contador)
-        #
+    
         IDEvaluacion = int(input("Ingrese el ID de la evaluación: "))
-        fecha = input("Fecha de la evaluación: ")
-        #dia,mes,anio = fecha[:2],fecha[3:5],fecha[6:]
-        #print(dia,mes,anio)
-        #dia = int(input("Ingrese dia: " ))
-        #mes = int(input("Ingrese mes: "))
-        #anio = int(input("Ingrese el año: "))
-        #fecha = (dia, "-", mes, "-" ,anio)
-        instanciaEv = input("Ingrese la instancia evaluativa: ")
-        #
+        dia=int(input("ingrese dia:"))
+        mes=int(input("ingrese el mes:"))
+        anio=int(input("ingrese el año:"))
+        fecha = (dia, mes, anio)
+        legajoAlumno = int(input("Ingrese el legajo del alumno: "))
+        legajoProfesor = int(input("Ingrese el legajo del profesor: "))
+        instanciaEv = input("Ingrese la instancia evaluativa(Parcial/Final/Recuperatorio): ")
         materia = input("Ingrese la materia: ")
+
+        if len(materia) > 10:
+            palabras = materia.split()
+            if len(palabras) > 1:
+                if palabras[1].lower() == "de" and len(palabras) >2:
+                    materiaReducida = palabras[0][:4] + " " + palabras[2]
+                else:
+                    materiaReducida = palabras[0] + " " + palabras[1][:3]
+            else:
+                materiaReducida = materia
+        else:
+            materiaReducida = materia
+        conjuntomaterias={materia}
+        conjuntomaterias.add(materiaReducida)
+    
+
+
         #VALIDACION DE CALIFICACIÓN MEDIANTE FUNCIÓN LAMBDA
         validacionlambda = lambda c: c < 1 or c > 10
-        calificacion = int(input("Ingrese la calificación del alumno: "))
+        calificacion = int(input("Ingrese la calificación del alumno: ")) 
         while validacionlambda(calificacion):
             print("Calificación no válida")
             calificacion = int(input("Ingrese nuevamente la calificación del alumno: "))
 
-        matriz_datos.append([IDEvaluacion,fecha,instanciaEv,materia,calificacion])
+        matrizEvaluaciones.append([IDEvaluacion,fecha,legajoAlumno,legajoProfesor,instanciaEv,conjuntomaterias,calificacion])
         contador += 1
 
         continuar = input("¿Deseas ingresar otra evaluación? (si/no): ")
 
     # Imprimir la matriz como tabla con tabulaciones
-    print("\nMatriz de datos (ID | Fecha | Instancia | Materia | Calificación):\n")
+    print("\nMatriz de datos (ID | Fecha | Legajo del Alumno | Legajo del Profesor | Instancia | Materia | Calificación):\n")
     
-    print("ID".ljust(20),"Fecha".ljust(20),"Instancia".ljust(20),"Materia".ljust(45),"Califiación")
+    print("ID".ljust(20),"Fecha".ljust(20),"Legajo del Alumno".ljust(20),"Legajo del Profesor".ljust(20),"Instancia".ljust(20),"Materia","Calificación")
     print("-" * 150)
 
-    for fila in matriz_datos:
-        print(str(fila[0]).ljust(20),fila[1].ljust(20),fila[2].ljust(20),str(fila[3]).ljust(45), fila[4])
+    for fila in matrizEvaluaciones:
+        fecha_str = f"{fila[1][0]:02d}/{fila[1][1]:02d}/{fila[1][2]}"
+        print(str(fila[0]).ljust(20),fecha_str.ljust(20),str(fila[2]).ljust(20),str(fila[3]).ljust(20), fila[4].ljust(20), fila[5], str(fila[6]).ljust(20))
     
-    return matriz_datos
+    return matrizEvaluaciones
+
 
 
 
@@ -103,20 +120,19 @@ def crearDiccionarioProfesores():
     DNI = []
     Mail = []
 
-    #Encabezados del diccionario
-    encabezados = ['Legajo','Nombre del Profesor','Apellido del Profesor','DNI','Mail']
+
 
 
     continuar = "si"
     contador = 1
 
-    while continuar == "si":
+    while continuar.lower() == "si":
         print("\nPersona", contador)
-        #PODEMOS VALIDAR EL LEGAJO
+      
         legajo = int(input("Ingrese el legajo del profesor: "))
         nombreProfesor = input("Nombre del profesor: ")
         apellidoProfesor = input("Apellido del profesor : ")
-        #PODEMOS VALIDAR EL DNI
+      
         dni = int(input("DNI: "))
         mail = input("Ingrese el email del profesor: ")
 
@@ -132,18 +148,15 @@ def crearDiccionarioProfesores():
             'ApellidoProfesores':ApellidoProfesor,
             'DNI':DNI,
             'Mail':Mail
-        }
-
-        
-
-        #FALTA IMPRIMIR DE ALGUNA MANERA LINDA EL DICCIONARIO
-
-
-        
+        } 
         contador += 1
 
         continuar = input("¿Deseas ingresar otra persona? (si/no): ")
-    return profesores
-    #
+    print(f"{"Legajo":<20}{"Nombre":<20}{"Apellido":<20}{"DNI":<20}{"Mail":<20}")
+          
+    for fila in zip(*profesores.values()):
+        print("".join(f"{str(item):<20}" for item in fila))
 
-#crearDiccionarioProfesores()
+    return profesores
+    
+
