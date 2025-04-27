@@ -79,7 +79,7 @@ def crearMatrizEvaluaciones():
         matriz_datos.append([IDEvaluacion,fecha,instanciaEv,materia,calificacion])
         contador += 1
 
-        continuar = input("¿Deseas ingresar otra persona? (si/no): ")
+        continuar = input("¿Deseas ingresar otra evaluación? (si/no): ")
 
     # Imprimir la matriz como tabla con tabulaciones
     print("\nMatriz de datos (ID | Fecha | Instancia | Materia | Calificación):\n")
@@ -143,7 +143,7 @@ def crearDiccionarioProfesores():
         contador += 1
 
         continuar = input("¿Deseas ingresar otra persona? (si/no): ")
-
+    return profesores
     #
 
 #crearDiccionarioProfesores()
