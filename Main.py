@@ -1,119 +1,125 @@
-import funciones.creacion
-
-matriz = funciones.creacion.crear_matrizEvaluaciones()
+import re,funciones.imprimir, funciones.creacion, funciones.modificar, funciones.eliminar, funciones.conversionmatriz
 
 
+# ===== MENÚ PRINCIPAL =====
 
-#OPCION 1
+def menu_principal():
+    alumnos = [["1200001", "Juan", "Pérez", 32123456, "juan.perez@gmail.com"],
+            ["1200002", "María", "Gómez", 33456789, "maria.gomez@yahoo.com"],
+            ["1200003", "Lucas", "Fernández", 31222333, "lucas.fernandez@hotmail.com"],
+            ["1200004", "Ana", "López", 34566777, "ana.lopez@gmail.com"]]
 
-# Función para crear la matriz de contactos
-def crear_matriz():
-    # Crear una matriz vacía (lista de listas)
-    matriz = []
-    return matriz
+    evaluaciones = [[1, "15/03/2025", "1200001", "1204565", "Parcial", "Matemática I", 8],
+                    [2, "20/04/2025", "1200304", "1201243", "Final", "Programación", 9],
+                    [3, "10/05/2025", "1203854", "1204124", "Parcial", "Historia", 7],
+                    [4, "05/06/2025", "1204895", "1204729", "Final", "Biología", 6]]
+
+    profesores = {"Legajo": [1001, 1002, 1003, 1004],
+                "NombreProfesores": ["Carlos", "Patricia", "Roberto", "Lucía"],
+                "ApellidoProfesores": ["Martínez", "Sosa", "Alvarez", "Diaz"],
+                "DNI": [22333444, 23444555, 24555666, 25666777],
+                "Mail": ["carlos.martinez@universidad.edu", "patricia.sosa@universidad.edu",
+                        "roberto.alvarez@universidad.edu", "lucia.diaz@universidad.edu"]}
+
+    bandera = True
+    while bandera:
+        print("\n===== MENÚ PRINCIPAL =====")
+        print("1. Ver datos\n2. Agregar\n3. Modificar\n4. Eliminar\n5. Salir")
+        op = input("Opción: ")
+        if op == '1':
+            subMenuImprimir(alumnos,evaluaciones,profesores)
+        elif op == '2':
+            alumnos,evaluaciones,profesores = subMenuCreacion(alumnos,evaluaciones,profesores)
+        elif op == '3':
+            alumnos,evaluaciones,profesores = subMenuModificar(alumnos,evaluaciones,profesores)
+        elif op == '4':
+            alumnos,evaluaciones,profesores = subMenuEliminar(alumnos,evaluaciones,profesores)
+        elif op == '5':
+            print("¡Gracias por usar el sistema!")
+            bandera = False
+        else:
+            print("Opción inválida.")
 
 
+# ===== SUBMENÚS =====
+# 
+#    
+def subMenuImprimir(alumnos,evaluaciones,profesores):
+    bandera = True
+    while bandera:
+        print("Que desea ver? ")
+        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
+        op = input("Opción: ")
+        if op == '1':
+            if type(alumnos) == 'dict':
+                funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
+            else:
+                funciones.imprimir.imprimirMatrizAlumnos(alumnos)
+        elif op == '2':
+            funciones.imprimir.imprimirMatrizEv(evaluaciones)
+        elif op == '3':
+            funciones.imprimir.imprimirDiccionarios(profesores)
+        elif op == '4':
+            bandera = False
+        else:
+            print("Opción inválida.")
 
-# Función para cargar la matriz con datos del alumno
-def cargar_datos(matriz):
-    # Datos de prueba (Legajo, NombreAlumno, Apellido, DNI, Email)
-    datos = [
-        [130890, "Juan", "Perez", "46789456", "juan.perez@gmail.com"],
-        [123457, "Ana", "Garcia", "42567908", "ana.garcia@email.com"],
-        [3, "Luis Martínez", "555-8765", "luis.martinez@email.com", "Calle Real 789"],
-        [4, "Carla López", "555-4321", "carla.lopez@email.com", "Blvd. de la Paz 101"],
-        [5, "Pedro Díaz", "555-6789", "pedro.diaz@email.com", "Calle Sol 999"]
-    ]
+#SUBMENÚ AGREGAR
+def subMenuCreacion(alumnos,evaluaciones,profesores):
+    bandera = True
+    while bandera:
+        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
+        op = input("Opción: ")
+        if op == '1':
+            matrizAlum = funciones.creacion.crearMatrizAlumnos(alumnos)
+            diccAlumnos = funciones.conversionmatriz.conversionMatrizADiccioario(matrizAlum)
+            funciones.imprimir.imprimirMatrizAlumnos(diccAlumnos)
+        elif op == '2':
+            evaluaciones = funciones.creacion.crearMatrizEvaluaciones(evaluaciones)
+            funciones.imprimir.imprimirMatrizEv(evaluaciones)
+        elif op == '3':
+            profesores = funciones.creacion.crearDiccionarioProfesores(profesores)
+            funciones.imprimir.imprimirDiccionarios(profesores)
+        elif op == '4':
+            bandera = False
+        else:
+            print("Opción inválida.")
+    return alumnos,evaluaciones,profesores
 
+#SUBMENÚ MODIFICAR
+def subMenuModificar(alumnos,evaluaciones,profesores):
+    bandera = True
+    while bandera:
+        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
+        op = input("Opción: ")
+        if op == '1':
+            alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
+            funciones.modificar.modificarAlumnos(alumnos)
+        elif op == '2':
+            evaluaciones = funciones.modificar.modificarEvaluaciones(evaluaciones)
+            # Imprimir la matriz como tabla con tabulaciones
+            print("\nMatriz de datos (ID | Fecha | Legajo del Alumno | Legajo del Profesor | Instancia | Materia | Calificación):\n")
     
-    # Agregar los datos a la matriz
-    for contacto in datos:
-        matriz.append(contacto)
+            print("ID".ljust(20),"Fecha".ljust(20),"Legajo del Alumno".ljust(20),"Legajo del Profesor".ljust(20),"Instancia".ljust(20),"Materia","Calificación")
+            print("-" * 150)
 
-# Función para imprimir la matriz
-def imprimir_matriz(matriz):
-    # Imprimir encabezados
-    print(f"{'ID':<5} {'Nombre':<15} {'Teléfono':<12} {'Email':<25} {'Dirección':<20}")
-    print("-" * 77)
+            for fila in evaluaciones:
+                fecha_str = f"{fila[1][0]:02}/{fila[1][1]:02}/{fila[1][2]}"
+                print(str(fila[0]).ljust(20),fecha_str.ljust(20),str(fila[2]).ljust(20),str(fila[3]).ljust(20), fila[4].ljust(20), fila[5].ljust(20), str(fila[6]).ljust(20))
     
-    # Imprimir los datos de la matriz
-    for contacto in matriz:
-        print(f"{contacto[0]:<5} {contacto[1]:<15} {contacto[2]:<12} {contacto[3]:<25} {contacto[4]:<20}")
-
-# Crear la matriz
-matriz_contactos = crear_matriz()
-
-# Cargar la matriz con los datos
-cargar_datos(matriz_contactos)
-
-# Imprimir la matriz
-imprimir_matriz(matriz_contactos)
+        elif op == '3':
+            profesores = funciones.modificar.modificarProfesores(profesores)
+            funciones.imprimir.imprimirDiccionarios(profesores)
+        elif op == '4':
+            bandera = False
+        else:
+            print("Opción inválida.")
+    return alumnos,evaluaciones,profesores    
 
 
-import random
-
-#OPCION 2
-def crear_matriz(filas, columnas):
-    return [[0]*columnas for fil in range(filas)]
-
-def crear_matriz2():
-    matriz = [[],[],[],[],[]]
-    fila = 0
-    columnas = 0
-    nombre = input("Ingrese el nombreAlumno ")
-    while nombre != "-1":
-        matriz[fila].append(nombre)
-        apellido = input("Ingrese el apellido del alumno ")
-        legajo = input("Ingrese el legajo del alumno ")
-        DNI = input("Ingrese el DNI del alumno ")
-        email = input("Ingrese el email del alumno ")
-        matriz[fila][columnas].append(apellido,legajo,DNI,email)
-    if nombre == "-1":
-            print("Ustede ha terminado de cargar los datos de los alumnos")
-    return matriz
+#SUBMENÚ ELIMINAR
+def subMenuEliminar(alumnos,evaluaciones,profesores):
+    alumnos,evaluaciones,profesores = funciones.eliminar.eliminarElementoMenu(alumnos,evaluaciones,profesores)
 
 
-# LA OPCION DEFINITIVA
-def crear_matrizAlumnos():
-    # Inicializar la matriz
-    matriz_datos = []
-
-    continuar = "si"
-    contador = 1
-
-    while continuar == "si":
-        print("\nPersona", contador)
-        #PODEMOS VALIDAR EL LEGAJO
-        legajo = int(input("Ingrese el legajo del alumno: "))
-        nombre = input("Nombre Alumno: ")
-        apellidoAlumno = input("Apellido : ")
-        #PODEMOS VALIDAR EL DNI
-        dni = int(input("DNI: "))
-        mail = input("Ingrese el email del alumno: ")
-
-
-        matriz_datos.append([legajo, nombre, apellidoAlumno , dni, mail])
-        contador += 1
-
-        continuar = input("¿Deseas ingresar otra persona? (si/no): ")
-
-    # Imprimir la matriz como tabla con tabulaciones
-    print("\nMatriz de datos (Legajo | Nombre | Apellido | DNI | Mail):\n")
-    print("Legajo\t\tNombre\tApellido\tDNI\tMail")
-    print("----------------------------------------")
-
-    for fila in matriz_datos:
-        print(str(fila[0]) + "\t\t" + fila[1] + "\t" + fila[2] + "\t" + str(fila[3]) + "\t" + fila[4])
-
-
-# Parámetros y matrices
-filas, columnas= 1, 5
-matriz1, matriz2 = crear_matriz(filas, columnas), crear_matriz(filas, columnas)
-print(matriz1)
-print(crear_matriz2())
-
-#crear_matrizAlumnos()
-
-
-#IMPLEMENTAR DICCIONARIOS EN LA MATRIZ DE PROFESORES, PORQUE ES UNA ENTIDAD ÁTOMICA
-#LA MATRIZ SE SOSTIENE PARA CUESTIONES DE INFORMACION A TRAVES DEL TIEMPO, POR EJ EVALUACIONES
+menu_principal()

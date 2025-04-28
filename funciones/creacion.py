@@ -1,9 +1,8 @@
 import re
 
 #CREACIÓN DE LA MATRIZ ALUMNOS
-def crearMatrizAlumnos():
+def crearMatrizAlumnos(alumnos):
     # Inicializar la matriz
-    matriz_datos = []
 
     continuar = "si"
     contador = 1
@@ -29,7 +28,7 @@ def crearMatrizAlumnos():
 
 
 
-        matriz_datos.append([legajo, nombre, apellidoAlumno , dni, mail])
+        alumnos.append([legajo, nombre, apellidoAlumno , dni, mail])
         contador += 1
 
         continuar = input("¿Deseas ingresar otra persona? (si/no): ")
@@ -40,15 +39,15 @@ def crearMatrizAlumnos():
     print("Legajo".ljust(15),"Nombre".ljust(15),"Apellido".ljust(15),"DNI".ljust(15),"Mail")
     print("-" * 80)
 
-    for fila in matriz_datos:
+    for fila in alumnos:
         print(str(fila[0]).ljust(15),fila[1].ljust(15),fila[2].ljust(15),str(fila[3]).ljust(15), fila[4])
     
-    return matriz_datos
+    return alumnos
 
 
 
 #CREACIÓN DE LA MATRIZ EVALUACIÓN
-def CrearMatrizEvaluaciones():
+def CrearMatrizEvaluaciones(evaluaciones):
     # Inicializar la matriz
     matrizEvaluaciones = []
 
@@ -112,15 +111,13 @@ def CrearMatrizEvaluaciones():
 
 
 #CREACIÓN DE DICCIONARIO DE PROFESORES
-def crearDiccionarioProfesores():
+def crearDiccionarioProfesores(profesores):
     # Inicializar listas vacias
-    Legajo = []
-    NombreProfesor = []
-    ApellidoProfesor = []
-    DNI = []
-    Mail = []
-
-
+    Legajo = [profesores[0]]
+    NombreProfesor = [profesores[1]]
+    ApellidoProfesor = [profesores[2]]
+    DNI = [profesores[3]]
+    Mail = [profesores[4]]
 
 
     continuar = "si"

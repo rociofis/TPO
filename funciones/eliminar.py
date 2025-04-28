@@ -2,7 +2,6 @@
 #Para hacer esto vamos a buscarlo con el ID, o por el Legajo
 #Ya que cualquiera de las tres matrices posee ID, o Legajo
 
-import creacion,conversionmatriz
 
 def eliminarElementoMatrizAlumnos(matriz,elemento):
     filas = len(matriz) #cantidad de filas
@@ -94,17 +93,7 @@ def eliminarElementoMenu(alumnos,matrizEv,profesores):
             print()
             idMatriz= int(input("Ingrese que matriz desea modificar [1,2,3,4]:  "))
 
-
-
-
-matriz = creacion.crearMatrizAlumnos()
-alumnos = conversionmatriz.conversionMatrizADiccioario(matriz)
-matrizEv = creacion.crearMatrizEvaluaciones()
-profesores = creacion.crearDiccionarioProfesores()
-eliminarElementoMenu(alumnos,matrizEv,profesores)
-print(alumnos)
-print(matrizEv)
-print(profesores)
+    return alumnos,matrizEv,profesores
 
 #El for alumno in alumnos recorre la lista alumnos, donde cada elemento es un diccionario que representa a un alumno con sus datos (por ejemplo, Legajo, NombreAlumno, etc.). El propósito del bucle es buscar un alumno cuyo Legajo coincida con el valor ingresado por el usuario y, si lo encuentra, eliminarlo de la lista.
 

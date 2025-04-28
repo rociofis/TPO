@@ -1,12 +1,10 @@
 #La idea sería acceder a la columna que se desea modificar atraves de su indice y compararlo con un if anidado
 #Y a su vez con algún método comparar la posición del dato a buscar, y acceder a la matriz con este indice y con la posicion del if
-import creacion
-import conversionmatriz
 
 #matrizAlumnos = creacion.CrearMatrizAlumnos()
 #alumnosDiccionario = conversionmatriz.conversionMatrizADiccioario(matrizAlumnos)
 #matrizEvaluaciones = creacion.CrearMatrizEvaluaciones()
-diccionarioProfesores = creacion.crearDiccionarioProfesores()
+#diccionarioProfesores = creacion.crearDiccionarioProfesores()
 
 #Se crea la matriz de alumnos y se convierte a diccionario
 #Se crea la matriz de evaluaciones
@@ -25,7 +23,9 @@ def modificarAlumnos(alumnosDiccionario):
     opcion = input("Que opción desea elegir? ")
     # Validación de la opción
     validarOpcion = opcion.isdigit()
-    while not validarOpcion:
+    while not validarOpcion or int(opcion) not in range(1,6):
+
+        #Validación de la opción
         print("El dato ingresado no es válido, por favor vuelva a ingresar un dato que sí lo sea")
         print("---------------------------")
         print("Opción 1: Legajo")
@@ -38,9 +38,6 @@ def modificarAlumnos(alumnosDiccionario):
         validarOpcion = opcion.isdigit()
 
     opcion = int(opcion)
-    while opcion not in range(1, 6):
-        print("Número de opción no válido, por favor volver a ingresar uno que sí lo sea")
-        opcion = int(input("Qué opción desea elegir?: "))
 
     print("\nLos legajos disponibles son: ")
     for alumno in alumnosDiccionario:
@@ -300,4 +297,3 @@ def modificarProfesores(profesores):
 
     return profesores
 
-modificarProfesores(diccionarioProfesores)

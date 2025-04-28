@@ -1,7 +1,6 @@
 #Función para convertir una matriz en diccionario
 #En este caso vamos a convertir la matriz alumnos una vez ya creada en un diccionario
 
-import creacion
 
 def conversionMatrizADiccioario(matriz):
     datosAlumnos = ['Legajo','NombreAlumno','ApellidoAlumno','DNI','Mail']
