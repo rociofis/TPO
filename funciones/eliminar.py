@@ -6,8 +6,6 @@
 import funciones.conversionmatriz,funciones.imprimir
 
 
-
-#LO MODIFIQUE
 def eliminarAlumno(alumnos,legajo):
     nuevoDiccionario = []
     alumnoEncontrado = False
