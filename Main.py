@@ -1,8 +1,6 @@
 import funciones.imprimir, funciones.creacion, funciones.modificar, funciones.eliminar, funciones.conversionmatriz
 
 
-# ===== MENÚ PRINCIPAL =====
-
 def menu_principal():
     alumnos = [[120333, "Juan", "Pérez", 32123456, "juan.perez@gmail.com"],
             [120444, "María", "Gómez", 33456789, "maria.gomez@yahoo.com"],
@@ -24,134 +22,84 @@ def menu_principal():
     bandera = True
     while bandera:
         print("\n===== MENÚ PRINCIPAL =====")
-        print("1. Ver datos\n2. Agregar\n3. Modificar\n4. Eliminar\n5. Salir")
-        op = input("Opción: ")
-        if op == '1':
-            subMenuImprimir(alumnos,evaluaciones,profesores)
-        elif op == '2':
-            alumnos,evaluaciones,profesores = subMenuCreacion(alumnos,evaluaciones,profesores)
-        elif op == '3':
-            alumnos,evaluaciones,profesores = subMenuModificar(alumnos,evaluaciones,profesores)
-        elif op == '4':
-            alumnos,evaluaciones,profesores = subMenuEliminar(alumnos,evaluaciones,profesores)
-        elif op == '5':
+        print("Seleccione la entidad:")
+        print("1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Salir")
+        entidad = input("Opción: ")
+
+        if entidad == '4':
             print("¡Gracias por usar el sistema!")
             bandera = False
+        elif entidad == '1' or entidad == '2' or entidad == '3':
+            print("\nSeleccione la operación:")
+            print("1. Ver\n2. Agregar\n3. Modificar\n4. Eliminar\n5. Volver")
+            operacion = input("Opción: ")
+
+            if operacion == '1':
+                subMenuImprimir(alumnos, evaluaciones, profesores, entidad)
+            elif operacion == '2':
+                alumnos, evaluaciones, profesores = subMenuCreacion(alumnos, evaluaciones, profesores, entidad)
+            elif operacion == '3':
+                alumnos, evaluaciones, profesores = subMenuModificar(alumnos, evaluaciones, profesores, entidad)
+            elif operacion == '4':
+                alumnos, evaluaciones, profesores = subMenuEliminar(alumnos, evaluaciones, profesores, entidad)
+            elif operacion == '5':
+                continue
+            else:
+                print("Opción inválida.")
         else:
             print("Opción inválida.")
 
 
 # ===== SUBMENÚS =====
-# 
-#    
-def subMenuImprimir(alumnos,evaluaciones,profesores):
-    bandera = True
-    while bandera:
-        print("Que desea ver? ")
-        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
-        op = input("Opción: ")
-        if op == '1':
-            if type(alumnos[0]) == list:
-                funciones.imprimir.imprimirMatrizAlumnos(alumnos)
-            else:
-                funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
-        elif op == '2':
-            funciones.imprimir.imprimirMatrizEv(evaluaciones)
-        elif op == '3':
-            funciones.imprimir.imprimirDiccionarios(profesores)
-        elif op == '4':
-            bandera = False
+def subMenuImprimir(alumnos, evaluaciones, profesores, entidad):
+    if entidad == '1':
+        if type(alumnos[0]) == list:
+            funciones.imprimir.imprimirMatrizAlumnos(alumnos)
         else:
-            print("Opción inválida.")
-
-#SUBMENÚ AGREGAR
-def subMenuCreacion(alumnos,evaluaciones,profesores):
-    bandera = True
-    while bandera:
-        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
-        op = input("Opción: ")
-        if op == '1':
-            if type(alumnos[0]) == list:
-                alumnos = funciones.creacion.crearMatrizAlumnos(alumnos)
-                alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-                funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
-            else:
-                alumnos = funciones.conversionmatriz.convertirDiccionarioEnMatriz(alumnos)
-                alumnos = funciones.creacion.crearMatrizAlumnos(alumnos)
-                funciones.imprimir.imprimirMatrizAlumnos(alumnos)
-                alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-        elif op == '2':
-            evaluaciones = funciones.creacion.CrearMatrizEvaluaciones(evaluaciones)
-            funciones.imprimir.imprimirMatrizEv(evaluaciones)
-        elif op == '3':
-            profesores = funciones.creacion.crearDiccionarioProfesores(profesores)
-            funciones.imprimir.imprimirDiccionarios(profesores)
-        elif op == '4':
-            bandera = False
-        else:
-            print("Opción inválida.")
-    return alumnos,evaluaciones,profesores
-
-#SUBMENÚ MODIFICAR
-def subMenuModificar(alumnos,evaluaciones,profesores):
-    bandera = True
-    while bandera:
-        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
-        op = input("Opción: ")
-        if op == '1':
-            if type(alumnos[0]) == list:
-                alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-            alumnos=funciones.modificar.modificarAlumnos(alumnos)
             funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
-        elif op == '2':
-            evaluaciones = funciones.modificar.modificarEvaluaciones(evaluaciones)
-            funciones.imprimir.imprimirMatrizEv(evaluaciones)
+    elif entidad == '2':
+        funciones.imprimir.imprimirMatrizEv(evaluaciones)
+    elif entidad == '3':
+        funciones.imprimir.imprimirDiccionarios(profesores)
 
-        elif op == '3':
-            profesores = funciones.modificar.modificarProfesores(profesores)
-            funciones.imprimir.imprimirDiccionarios(profesores)
-            
-        elif op == '4':
-            bandera = False
+def subMenuCreacion(alumnos, evaluaciones, profesores, entidad):
+    if entidad == '1':
+        if type(alumnos[0]) == list:
+            alumnos = funciones.creacion.crearMatrizAlumnos(alumnos)
+            alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
+            funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
         else:
-            print("Opción inválida.")
-    return alumnos,evaluaciones,profesores    
+            alumnos = funciones.conversionmatriz.convertirDiccionarioEnMatriz(alumnos)
+            alumnos = funciones.creacion.crearMatrizAlumnos(alumnos)
+            funciones.imprimir.imprimirMatrizAlumnos(alumnos)
+            alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
+    elif entidad == '2':
+        evaluaciones = funciones.creacion.CrearMatrizEvaluaciones(evaluaciones)
+        funciones.imprimir.imprimirMatrizEv(evaluaciones)
+    elif entidad == '3':
+        profesores = funciones.creacion.crearDiccionarioProfesores(profesores)
+        funciones.imprimir.imprimirDiccionarios(profesores)
+    return alumnos, evaluaciones, profesores
 
+def subMenuModificar(alumnos, evaluaciones, profesores, entidad):
+    if entidad == '1':
+        if type(alumnos[0]) == list:
+            alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
+        alumnos = funciones.modificar.modificarAlumnos(alumnos)
+        funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
+    elif entidad == '2':
+        evaluaciones = funciones.modificar.modificarEvaluaciones(evaluaciones)
+        funciones.imprimir.imprimirMatrizEv(evaluaciones)
+    elif entidad == '3':
+        profesores = funciones.modificar.modificarProfesores(profesores)
+        funciones.imprimir.imprimirDiccionarios(profesores)
+    return alumnos, evaluaciones, profesores
 
-#SUBMENÚ ELIMINAR
-def subMenuEliminar(alumnos,evaluaciones,profesores):
-    if type(alumnos[0]) == list:  # Si es una lista de listas
+def subMenuEliminar(alumnos, evaluaciones, profesores, entidad):
+    if type(alumnos[0]) == list:
         alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-
-    alumnos,evaluaciones,profesores=funciones.eliminar.eliminarElementoMenu(alumnos,evaluaciones,profesores)
-    return alumnos,evaluaciones,profesores 
-"""""
-    bandera=True
-    while bandera:
-        print("\n1. Alumnos\n2. Evaluaciones\n3. Profesores\n4. Volver")
-        op = input("Opción: ")
-        if op == '1':
-            if type(alumnos[0]) == list:
-                alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-            alumnoEncontrado,alumnos = funciones.eliminar.eliminarAlumno(alumnos)
-            funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
-            
-            print(alumnos)
-            
-        elif op == '2':
-            evaluaciones = funciones.modificar.modificarEvaluaciones(evaluaciones)
-            funciones.imprimir.imprimirMatrizEv(evaluaciones)
-
-        elif op == '3':
-            profesores = funciones.modificar.modificarProfesores(profesores)
-            funciones.imprimir.imprimirDiccionarios(profesores)
-            
-        elif op == '4':
-            bandera = False
-        else:
-            print("Opción inválida.")
-"""
-
+    alumnos, evaluaciones, profesores = funciones.eliminar.eliminarElementoMenu(alumnos, evaluaciones, profesores, entidad)
+    return alumnos, evaluaciones, profesores
 
 
 menu_principal()
