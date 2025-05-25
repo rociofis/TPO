@@ -208,10 +208,10 @@ def crearDiccionarioProfesores(profesores):
 
     return profesores
     
-profesores = []
-crearDiccionarioProfesores(profesores)
-print(profesores)
-print(type(profesores))
+#profesores = []
+#crearDiccionarioProfesores(profesores)
+#print(profesores)
+#print(type(profesores))
 
 
 #COSAS POR HACER:

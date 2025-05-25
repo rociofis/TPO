@@ -71,13 +71,14 @@ def eliminarProfesor(profesores,legajoProfesor):
         print(f"No se encontro profesor con el legajo {legajoProfesor}")
     return profesores
 
+'''
 profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
             {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
             {"Legajo": 120111, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
             {"Legajo": 120990, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
-
-preofesores = eliminarProfesor(profesores,1201111)
-print(profesores)
+'''
+#preofesores = eliminarProfesor(profesores,1201111)
+#print(profesores)
 
 '''
 def eliminarElementoMenu(alumnos,evaluaciones,profesores):

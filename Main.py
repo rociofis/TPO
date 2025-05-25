@@ -12,12 +12,10 @@ def menu_principal():
                     [3, "10","05","2025", "1203854", "1204124", "Parcial", "Historia", 7],
                     [4, "05","06","2025", "1204895", "1204729", "Final", "Biología", 6]]
 
-    profesores = {"Legajo": [1001, 1002, 1003, 1004],
-                "NombreProfesores": ["Carlos", "Patricia", "Roberto", "Lucía"],
-                "ApellidoProfesores": ["Martínez", "Sosa", "Alvarez", "Diaz"],
-                "DNI": [22333444, 23444555, 24555666, 25666777],
-                "Mail": ["carlos.martinez@universidad.edu", "patricia.sosa@universidad.edu",
-                        "roberto.alvarez@universidad.edu", "lucia.diaz@universidad.edu"]}
+    profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
+            {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
+            {"Legajo": 120111, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
+            {"Legajo": 120990, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
 
     bandera = True
     while bandera:
@@ -48,6 +46,7 @@ def menu_principal():
                 print("Opción inválida.")
         else:
             print("Opción inválida.")
+    return alumnos,evaluaciones,profesores
 
 
 # ===== SUBMENÚS =====
@@ -96,10 +95,19 @@ def subMenuModificar(alumnos, evaluaciones, profesores, entidad):
     return alumnos, evaluaciones, profesores
 
 def subMenuEliminar(alumnos, evaluaciones, profesores, entidad):
-    if type(alumnos[0]) == list:
-        alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
-    alumnos, evaluaciones, profesores = funciones.eliminar.eliminarElementoMenu(alumnos, evaluaciones, profesores, entidad)
+    if entidad == '1':
+        if type(alumnos[0]) == list:
+            alumnos = funciones.conversionmatriz.conversionMatrizADiccioario(alumnos)
+        alumnos = funciones.eliminar.eliminarAlumno(alumnos)
+        funciones.imprimir.imprimirMatrizDiccAlumnos(alumnos)
+    elif entidad == '2':
+        evaluaciones = funciones.eliminar.eliminarEvaluacion(evaluaciones)
+        funciones.imprimir.imprimirMatrizEv(evaluaciones)
+    elif entidad == '3':
+        profesores = funciones.eliminar.eliminarProfesor(profesores)
+        funciones.imprimir.imprimirMatrizDiccAlumnos(profesores)
     return alumnos, evaluaciones, profesores
+
 
 
 menu_principal()
