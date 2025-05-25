@@ -7,55 +7,79 @@ import funciones.conversionmatriz,funciones.imprimir
 
 
 def eliminarAlumno(alumnos,legajo):
-    nuevoDiccionario = []
     alumnoEncontrado = False
-    i = 0
     for alumno in alumnos:
         
         if int(alumno["Legajo"]) == legajo:  # Compara el legajo como cadena
             alumnoEncontrado = True
-        else: 
-            nuevoDiccionario.append(alumnos[i]) #Creo una nueva lista con los datos que no se desean borrar
-        i+=1
+            alumnos.remove(alumno)  # Elimina el diccionario de la lista
+        
     if alumnoEncontrado:
-        #alumnos.remove(alumno)  # Elimina el diccionario de la lista
         print(f"Alumnos con legajo {legajo} eliminado.")
     else:
         print(f"No se encontro un alumno con el legajo {legajo}")
-    return nuevoDiccionario
+    return alumnos
 
+'''
+PRUEBAS:
+alumnos = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
+            {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
+            {"Legajo": 120111, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
+            {"Legajo": 120990, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
 
+alumnos = eliminarAlumno(alumnos,120444)
+print(alumnos)
+'''
 
 def eliminarEvaluacion(evaluaciones,idEval):
-    filas = len(evaluaciones)
     evaluacionEncontrada = False
-    nuevaMatriz = []
-    for fil in range (filas):
-        if len(evaluaciones[fil]) > 0 and evaluaciones[fil][0] == idEval:
-            #matrizEv.pop(fil)
+
+    for fil in range (len(evaluaciones)-1):
+        if evaluaciones[fil][0] == idEval:
+            evaluaciones.pop(fil)
             evaluacionEncontrada = True
-        else:
-            nuevaMatriz.append(evaluaciones[fil])
-    return evaluacionEncontrada,nuevaMatriz
+    
+    if evaluacionEncontrada:
+        print(f"Evaluación con ID {idEval} eliminada.")
+    else:
+        print(f"No se encontro ninguna evaluación con ID {idEval}")
 
+    return evaluaciones
 
+'''
+PRUEBAS:
+evaluaciones = [[1, "15","03","2025", "1200001", "1204565", "Parcial", "Matemática I", 8],
+                    [2, "20","04","2025", "1200304", "1201243", "Final", "Programación", 9],
+                    [3, "10","05","2025", "1203854", "1204124", "Parcial", "Historia", 7],
+                    [4, "05","06","2025", "1204895", "1204729", "Final", "Biología", 6]]
+evaluaciones = eliminarEvaluacion(evaluaciones,3)
+print(evaluaciones)
+'''
 
 def eliminarProfesor(profesores,legajoProfesor):
     profesorEncontrado = False
-    i = 0
+    i=0
+    while (not profesorEncontrado) and (i < len(profesores)-1):
+        for profesor in profesores:
+            if int(profesor["Legajo"]) == legajoProfesor:
+                profesores.remove(profesor)
+                profesorEncontrado = True
+        i+=1
+    if profesorEncontrado:
+        print(f"Profesor con legajo {legajoProfesor} eliminado.")
+    else:
+        print(f"No se encontro profesor con el legajo {legajoProfesor}")
+    return profesores
 
-    while (i < len(profesores["Legajo"])) and (not profesorEncontrado) :
-        if profesores["Legajo"][i] == legajoProfesor:
-            profesores["Legajo"].pop(i)
-            profesores["NombreProfesores"].pop(i)
-            profesores["ApellidoProfesores"].pop(i)
-            profesores["DNI"].pop(i)
-            profesores["Mail"].pop(i)
-            profesorEncontrado = True
-        i += 1
-    return profesorEncontrado,profesores
+profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
+            {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
+            {"Legajo": 120111, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
+            {"Legajo": 120990, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
 
+preofesores = eliminarProfesor(profesores,1201111)
+print(profesores)
 
+'''
 def eliminarElementoMenu(alumnos,evaluaciones,profesores):
     bandera = True
     print("---------------------------")
@@ -162,4 +186,4 @@ def eliminarElementoMenu(alumnos,evaluaciones,profesores):
             idMatriz= int(input("Ingrese que matriz desea modificar:  "))
     return alumnos,evaluaciones,profesores
 
-
+'''
