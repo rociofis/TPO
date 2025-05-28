@@ -8,12 +8,14 @@ import funciones.conversionmatriz,funciones.imprimir
 
 def eliminarAlumno(alumnos,legajo):
     alumnoEncontrado = False
-    for alumno in alumnos:
-        
-        if int(alumno["Legajo"]) == legajo:  # Compara el legajo como cadena
+    bandera = True
+    i = 0
+    while bandera and i < len(alumnos):
+        if legajo in alumnos[i].values():
             alumnoEncontrado = True
-            alumnos.remove(alumno)  # Elimina el diccionario de la lista
-        
+            alumnos.pop(i)  # Elimina el diccionario de la lista
+            bandera = False
+        i += 1
     if alumnoEncontrado:
         print(f"Alumnos con legajo {legajo} eliminado.")
     else:

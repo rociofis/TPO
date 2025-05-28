@@ -111,7 +111,6 @@ def crearMatrizAlumnos(alumnos):
                 print("Error de ingreso")
                 print("Se esperaba que ingrese: si o no")
                 continuar = ingresarCadenas("¿Deseas ingresar otra persona? (si/no): ")
-
     
     return alumnos
 
@@ -223,10 +222,10 @@ def crearDiccionarioProfesores(profesores):
 
     return profesores
     
-#profesores = []
-#crearDiccionarioProfesores(profesores)
-#print(profesores)
-#print(type(profesores))
+profesores = []
+crearDiccionarioProfesores(profesores)
+print(profesores)
+print(type(profesores))
 
 
 #COSAS POR HACER:
@@ -247,7 +246,6 @@ def crearDiccionarioProfesores(profesores):
 
 #PREGUNTAS PARA EL PROFE:
 '''
-1) Preguntar si el tipo de pruba que hizo pippo esta bien agregarla
 
 
 
