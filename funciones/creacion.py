@@ -14,6 +14,19 @@ def ingresarNumeros(mensaje):
         # Tendriamos que darle la opción al usuario de que pueda dejar de intentar de ingresar?
     return num
 
+def validarOpciones(opciones, mensaje):
+    while True:
+        try:
+            opcion = (int(input(mensaje)))
+            assert opcion in opciones
+            break
+        except ValueError:
+            print("Se esperaba que ingrese un número")
+            print("Vuelva a ingresarlo")
+        except AssertionError:
+            print("Opción no válida, por favor elija una de las siguientes opciones:", opciones)
+    return opcion
+
 #La idea de la funcion ingresarNumeros es que la persona ingrese un dato por teclado
 #Si este no se puede convertir en entero, en vez de que tire error y corte la ejecucion del programa
 #Se controla con la excepcion de ValueError, mostrando por pantalla al usuario que se equivoco
@@ -24,6 +37,7 @@ def ingresarCadenas(mensaje):
     while True:
         try:
             texto = input(mensaje)
+            texto = texto.strip()  # Elimina espacios al inicio y al final
             assert(texto.isalpha())
             break
         except AssertionError :
@@ -74,15 +88,16 @@ def crearMatrizAlumnos(alumnos):
 
     while continuar.lower() == "si":
         print("\nPersona", contador)
-        
-        legajo = ingresarNumeros("Ingrese el legajo del alumno: ")
-        legajoEnmascarado = re.sub("[0-2]{3}[0-9]{4}",'120XXXX',legajo)
+
+        legajo = alumnos[-1][0] + 1  # Asignar legajo automáticamente
+
+        legajoEnmascarado = re.sub("[0-2]{3}[0-9]{4}",'120XXXX',str(legajo))
         print(legajoEnmascarado)
-        nombre = ingresarCadenas("Nombre Alumno: ")
-        apellidoAlumno = ingresarCadenas("Apellido : ")
+        nombre = ingresarCadenas("Nombre Alumno: ").strip()
+        apellidoAlumno = ingresarCadenas("Apellido : ").strip()
 
         dni = ingresarNumeros("DNI: ")
-        mailValidado = validarMail2("Ingrese el email del alumno: ")
+        mailValidado = validarMail2("Ingrese el email del alumno: ").strip()
 
         alumnos.append([legajo, nombre, apellidoAlumno , dni, mailValidado])
         contador += 1
@@ -120,8 +135,8 @@ def CrearMatrizEvaluaciones(evaluaciones):
         fecha = (dia, mes, anio)
         legajoAlumno = ingresarNumeros("Ingrese el legajo del alumno: ")
         legajoProfesor = ingresarNumeros("Ingrese el legajo del profesor: ")
-        instanciaEv = ingresarCadenas("Ingrese la instancia evaluativa(Parcial/Final/Recuperatorio): ")
-        materia = ingresarCadenas("Ingrese la materia: ")
+        instanciaEv = ingresarCadenas("Ingrese la instancia evaluativa(Parcial/Final/Recuperatorio): ").strip()
+        materia = ingresarCadenas("Ingrese la materia: ").strip()
 
         if len(materia) > 10:
             palabras = materia.split()
@@ -140,7 +155,7 @@ def CrearMatrizEvaluaciones(evaluaciones):
 
         #VALIDACION DE CALIFICACIÓN MEDIANTE FUNCIÓN LAMBDA
         validacionlambda = lambda c: c < 1 or c > 10
-        calificacion = int(input("Ingrese la calificación del alumno: ")) 
+        calificacion = int(input("Ingrese la calificación del alumno: "))
         while validacionlambda(calificacion):
             print("Calificación no válida")
             calificacion = int(input("Ingrese nuevamente la calificación del alumno: "))
@@ -148,7 +163,7 @@ def CrearMatrizEvaluaciones(evaluaciones):
         evaluaciones.append([IDEvaluacion,dia,mes,anio,legajoAlumno,legajoProfesor,instanciaEv,conjuntomaterias,calificacion])
         contador += 1
 
-        continuar = ingresarCadenas("¿Deseas ingresar otra persona? (si/no): ")
+        continuar = ingresarCadenas("¿Deseas ingresar otra persona? (si/no): ").strip()
         while True:
             try:
                 assert(continuar.lower()=="si" or continuar.lower()=="no")

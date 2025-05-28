@@ -2,20 +2,20 @@ import funciones.imprimir, funciones.creacion, funciones.modificar, funciones.el
 
 
 def menu_principal():
-    alumnos = [[120333, "Juan", "Pérez", 32123456, "juan.perez@gmail.com"],
-            [120444, "María", "Gómez", 33456789, "maria.gomez@yahoo.com"],
-            [120555, "Lucas", "Fernández", 31222333, "lucas.fernandez@hotmail.com"],
-            [120222, "Ana", "López", 34566777, "ana.lopez@gmail.com"]]
+    alumnos = [[1200001, "Juan", "Pérez", 32123456, "juan.perez@gmail.com"],
+            [1200002, "María", "Gómez", 33456789, "maria.gomez@yahoo.com"],
+            [1200003, "Lucas", "Fernández", 31222333, "lucas.fernandez@hotmail.com"],
+            [1200004, "Ana", "López", 34566777, "ana.lopez@gmail.com"]]
 
     evaluaciones = [[1, "15","03","2025", "1200001", "1204565", "Parcial", "Matemática I", 8],
                     [2, "20","04","2025", "1200304", "1201243", "Final", "Programación", 9],
                     [3, "10","05","2025", "1203854", "1204124", "Parcial", "Historia", 7],
                     [4, "05","06","2025", "1204895", "1204729", "Final", "Biología", 6]]
 
-    profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
-            {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
-            {"Legajo": 120111, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
-            {"Legajo": 120990, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
+    profesores = [{"Legajo": 1001, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
+            {"Legajo": 1002, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
+            {"Legajo": 1003, "Nombre":"Matias", "Apellido":"Lugo", "DNI":7438384, "Mail":"tomasLUGO@gmail.com"},
+            {"Legajo": 1004, "Nombre":"Julian", "Apellido":"Fernan", "DNI":929323, "Mail":"juafernan@gmail.com"}]
 
     bandera = True
     while bandera:
@@ -59,7 +59,7 @@ def subMenuImprimir(alumnos, evaluaciones, profesores, entidad):
     elif entidad == '2':
         funciones.imprimir.imprimirMatrizEv(evaluaciones)
     elif entidad == '3':
-        funciones.imprimir.imprimirDiccionarios(profesores)
+        funciones.imprimir.imprimirMatrizDiccProfesores(profesores)
 
 def subMenuCreacion(alumnos, evaluaciones, profesores, entidad):
     if entidad == '1':
@@ -77,7 +77,7 @@ def subMenuCreacion(alumnos, evaluaciones, profesores, entidad):
         funciones.imprimir.imprimirMatrizEv(evaluaciones)
     elif entidad == '3':
         profesores = funciones.creacion.crearDiccionarioProfesores(profesores)
-        funciones.imprimir.imprimirDiccionarios(profesores)
+        funciones.imprimir.imprimirMatrizDiccProfesores(profesores)
     return alumnos, evaluaciones, profesores
 
 def subMenuModificar(alumnos, evaluaciones, profesores, entidad):
@@ -91,7 +91,7 @@ def subMenuModificar(alumnos, evaluaciones, profesores, entidad):
         funciones.imprimir.imprimirMatrizEv(evaluaciones)
     elif entidad == '3':
         profesores = funciones.modificar.modificarProfesores(profesores)
-        funciones.imprimir.imprimirDiccionarios(profesores)
+        funciones.imprimir.imprimirMatrizDiccProfesores(profesores)
     return alumnos, evaluaciones, profesores
 
 def subMenuEliminar(alumnos, evaluaciones, profesores, entidad):
