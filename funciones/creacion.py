@@ -1,6 +1,6 @@
 def cargarEvaluaciones(evaluaciones, archivo):
     try:
-        lineas = [f"{id_ev},{dia},{mes},{año},{legajo_alumno},{legajo_profesor},{instancia},{materia},{nota}\n" for id_ev,
+        lineas = [f"{id_ev};{dia};{mes};{año};{legajo_alumno};{legajo_profesor};{instancia};{materia};{nota}\n" for id_ev,
         dia, mes, año, legajo_alumno, legajo_profesor, instancia, materia, nota in evaluaciones]
         with open(archivo, 'w', encoding='UTF-8') as arch:
             arch.writelines(lineas)
