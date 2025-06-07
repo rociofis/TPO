@@ -1,4 +1,7 @@
 #FUNCIONES PARA CONTROLAR LOS ERROR POR INGRESO DE DATOS POR TECLADOAdd commentMore actions
+import re
+import json
+
 
 def buscarUlID(archivo):
 #Lo que tiene que hacer esta función es abrir el archivo y convertir en una lista todos los datos en la posición 0
@@ -17,10 +20,22 @@ def ingresarNumeros(mensaje):
             print("Vuelva a ingresarlo")
         # Tendriamos que darle la opción al usuario de que pueda dejar de intentar de ingresar?
     return num
+
 evaluaciones = [[1, "15","03","2025", "1200001", "1204565", "Parcial", "Matemática I", 8],
                 [2, "20","04","2025", "1200304", "1201243", "Final", "Programación", 9],
                 [3, "10","05","2025", "1203854", "1204124", "Parcial", "Historia", 7],
                 [4, "05","06","2025", "1204895", "1204729", "Final", "Biología", 6]]
+
+def ingresarDNI(mensaje):
+    while True:
+        try:
+            dni = int(input(mensaje))
+            if dni < 1000000 or dni > 99999999:
+                print("El DNI debe tener entre 7 y 8 dígitos.")
+            else:
+                return dni
+        except ValueError:
+            print("Se esperaba un numero entero para el DNI.")
 
 def validarOpciones(opciones, mensaje):
     while True:
@@ -104,7 +119,7 @@ def crearMatrizAlumnos(alumnos):
         nombre = ingresarCadenas("Nombre Alumno: ").strip()
         apellidoAlumno = ingresarCadenas("Apellido : ").strip()
 
-        dni = ingresarNumeros("DNI: ")
+        dni = ingresarDNI("DNI: ")
         mailValidado = validarMail2("Ingrese el email del alumno: ").strip()
 
         alumnos.append([legajo, nombre, apellidoAlumno , dni, mailValidado])
@@ -264,7 +279,7 @@ def crearDiccionarioProfesores(profesores):
         legajo = ingresarNumeros("Ingrese el legajo del profesor: ")
         nombreProfesor = ingresarCadenas("Nombre del profesor: ")
         apellidoProfesor = ingresarCadenas("Apellido del profesor : ")
-        dni = ingresarNumeros("DNI: ")
+        dni = ingresarDNI("DNI: ")
         mailValidado = validarMail2("Ingrese el mail del profesor: ")
         
 
@@ -291,7 +306,71 @@ def crearDiccionarioProfesores(profesores):
                 continuar = ingresarCadenas("¿Deseas ingresar otra persona? (si/no): ")
 
     return profesores
-    
+
+
+def agregarProfesorArchivosJSON(archivo):
+    try:
+        # Leer archivo
+        try:
+            with open(archivo, "r", encoding="UTF-8") as datos:
+                profesores = json.load(datos)
+        except FileNotFoundError:
+            profesores = []  # Si el archivo no existe, se inicia una lista vacía
+
+        while True:
+            print("\n--- Agregar un nuevo profesor ---")
+            if profesores:
+                legajo = max(profesor['Legajo'] for profesor in profesores) + 1
+            else:
+                legajo = 1000
+
+            nombre = ingresarCadenas("Ingrese nombre: ")
+            apellido = ingresarCadenas("Ingrese apellido: ")
+            DNI = ingresarDNI("Ingrese DNI: ")
+            mail = validarMail2("Ingrese mail: ")
+
+            nuevo_profesor = {
+                "Legajo": legajo,
+                "Nombre": nombre,
+                "Apellido": apellido,
+                "DNI": DNI,
+                "Mail": mail
+            }
+
+            profesores.append(nuevo_profesor)
+
+            with open(archivo, "w", encoding="UTF-8") as datos:
+                json.dump(profesores, datos, ensure_ascii=False, indent=4)
+
+            print("\nProfesor agregado correctamente.")
+
+            print(
+                "Legajo".ljust(10),
+                "Nombre".ljust(10),
+                "Apellido".ljust(12),
+                "DNI".ljust(10),
+                "Mail"
+            )
+            for prof in profesores:
+                print(
+                    str(prof['Legajo']).ljust(10),
+                    prof['Nombre'].ljust(10),
+                    prof['Apellido'].ljust(12),
+                    str(prof['DNI']).ljust(10),
+                    prof['Mail']
+                )
+            continuar = ingresarCadenas("¿Deseas agregar otro profesor? (si/no): ").strip()
+            while continuar not in ["si", "no"]:
+                print("Error de ingreso")
+                print("Se esperaba que ingrese: si o no")
+                continuar = ingresarCadenas("¿Deseas agregar otro profesor? (si/no): ").strip()
+            if continuar == "no":
+                break
+    except Exception as e:
+        print(f"Error: {e}")
+agregarProfesorArchivosJSON("profesores.json")
+
+
 #profesores = []
 #crearDiccionarioProfesores(profesores)
 #print(profesores)

@@ -1,0 +1,37 @@
+[
+    {
+        "Legajo": 1001,
+        "Nombre": "Matias",
+        "Apellido": "Perez",
+        "DNI": 32123456,
+        "Mail": "juan.perez@gmail.com"
+    },
+    {
+        "Legajo": 1002,
+        "Nombre": "Felipe",
+        "Apellido": "Penny",
+        "DNI": 2342332,
+        "Mail": "tomm.penny@gmail.com"
+    },
+    {
+        "Legajo": 1003,
+        "Nombre": "Matias",
+        "Apellido": "Lugo",
+        "DNI": 7438384,
+        "Mail": "tomasLUGO@gmail.com"
+    },
+    {
+        "Legajo": 1004,
+        "Nombre": "Julian",
+        "Apellido": "Fernan",
+        "DNI": 9293233,
+        "Mail": "juafernan@gmail.com"
+    },
+    {
+        "Legajo": 1005,
+        "Nombre": "Julio",
+        "Apellido": "Lopez",
+        "DNI": 1000000,
+        "Mail": "JL@gmail.com"
+    }
+]
