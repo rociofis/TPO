@@ -3,6 +3,8 @@ import re
 import json
 
 
+import re
+
 def buscarUlID(archivo):
 #Lo que tiene que hacer esta función es abrir el archivo y convertir en una lista todos los datos en la posición 0
 #Que esos serían los IDS 
@@ -309,6 +311,7 @@ def crearDiccionarioProfesores(profesores):
 
 
 def agregarProfesorArchivosJSON(archivo):
+    bandera = True
     try:
         # Leer archivo
         try:
@@ -317,7 +320,7 @@ def agregarProfesorArchivosJSON(archivo):
         except FileNotFoundError:
             profesores = []  # Si el archivo no existe, se inicia una lista vacía
 
-        while True:
+        while bandera:
             print("\n--- Agregar un nuevo profesor ---")
             if profesores:
                 legajo = max(profesor['Legajo'] for profesor in profesores) + 1
@@ -365,9 +368,10 @@ def agregarProfesorArchivosJSON(archivo):
                 print("Se esperaba que ingrese: si o no")
                 continuar = ingresarCadenas("¿Deseas agregar otro profesor? (si/no): ").strip()
             if continuar == "no":
-                break
+                bandera = False
     except Exception as e:
         print(f"Error: {e}")
+
 agregarProfesorArchivosJSON("profesores.json")
 
 

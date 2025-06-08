@@ -3,8 +3,31 @@
 #Ya que cualquiera de las tres matrices posee ID, o Legajo
 
 
-import funciones.conversionmatriz,funciones.imprimir
+#import funciones.conversionmatriz,funciones.imprimir
+import json
 
+def ingresarNumeros(mensaje):
+    while True:
+        try:
+            num = int(input(mensaje))
+            break
+        except ValueError:
+            print("Se esperaba que ingrese un número")
+            print("Vuelva a ingresarlo")
+        # Tendriamos que darle la opción al usuario de que pueda dejar de intentar de ingresar?
+    return num
+
+def ingresarCadenas(mensaje):
+    while True:
+        try:
+            texto = input(mensaje)
+            texto = texto.strip()  # Elimina espacios al inicio y al final
+            assert(texto.isalpha())
+            break
+        except AssertionError :
+            print("Se esperaba que ingrese una cadena de texto")
+            print("Vuelva a ingresarlo!")
+    return texto
 
 def eliminarAlumno(alumnos,legajo):
     alumnoEncontrado = False
@@ -48,6 +71,63 @@ def eliminarEvaluacion(evaluaciones,idEval):
 
     return evaluaciones
 
+def eliminarEvaluacionArchivos(archivo):
+    evaluaciones = []
+
+    try:
+        #Leer el archivo linea por linea y va vargando la matriz
+        with open(archivo,'r',encoding="UTF-8") as file:
+            primerLinea = file.readline()
+            if not primerLinea:
+                raise AssertionError("El archivo está vacío, no hay evaluaciones para eliminar")
+            evaluaciones.append(primerLinea.strip().split(";"))
+
+            linea = file.readline()
+            while linea:
+                evaluaciones.append(linea.strip().split(";"))
+                linea = file.readline()
+        IDS = [int(eval[0]) for eval in evaluaciones]
+        print("Los IDS de evaluaciones disponibles son: ")
+        for id in IDS:
+            print(f"- {id}")
+        idEliminar = ingresarNumeros("Ingrese el ID que desea eliminar: ")
+        if idEliminar in IDS:
+            indice = IDS.index(idEliminar)
+            print("ATENCIÓN!!!!!!!!!")
+            print(f"Esta seguro que desea eliminar la evaluación con ID: {idEliminar}")
+            ev = evaluaciones[indice]
+            print(f"""
+            Evaluación a eliminar:
+            ------------------------
+            ID: {ev[0]}
+            Fecha: {ev[1]}/{ev[2]}/{ev[3]}
+            Legajo Alumno: {ev[4]}
+            Legajo Profesor: {ev[5]}
+            Instancia: {ev[6]}
+            Materia: {ev[7]}
+            Calificación: {ev[8]}
+            ------------------------
+            """)
+            decision = ingresarCadenas("Ingrese si o no: ")
+            while decision.lower() not in ["si", "no"]:
+                print("Error de ingreso. Se esperaba: si o no")
+                decision = ingresarCadenas("Ingrese si o no: ")
+
+            if decision.lower() == "si":
+                evaluaciones.pop(indice)
+
+                with open(archivo, 'w',encoding="UTF-8") as file:
+                    #Necesitamos volver a convertir las lineas en texto y que este separado por ";"
+                    for eval in evaluaciones:
+                        file.write(";".join(eval) + "\n")
+                print(f"Evaluacion con ID {idEliminar} eliminado.")
+        else:
+            print(f"Evaluación con ID {idEliminar} no encontrado.")
+    except OSError as error:
+        print("Error accediendo al archvio",error)
+
+
+#eliminarEvaluacionArchivos("evaluaciones.txt")
 '''
 PRUEBAS:
 evaluaciones = [[1, "15","03","2025", "1200001", "1204565", "Parcial", "Matemática I", 8],
@@ -73,6 +153,52 @@ def eliminarProfesor(profesores,legajoProfesor):
         print(f"No se encontro profesor con el legajo {legajoProfesor}")
     return profesores
 
+
+
+def eliminarProfesorArchivosJSON(archivo): #no hace falta pasar profesores como parametro
+    try:
+        with open(archivo, "r",encoding="UTF-8") as file:
+            profesores = json.load(file)
+        if not profesores:
+            raise AssertionError("El archivo esta vacío, no hay profesores para eliminar")
+        legajos = [profesor["Legajo"] for profesor in profesores]
+        print("Los legajos disponibles son:")
+        for legajo in legajos:
+            print(f"- {legajo}")
+        legajoProfeAEliminar = ingresarNumeros("Ingrese el legajo del profesor que se desea eliminar: ")
+        if legajoProfeAEliminar in legajos:
+            indice = legajos.index(legajoProfeAEliminar)
+            print("ATENCIÓN !!!")
+            print(f"Esta seguro que desea eliminar el profesor con legajo {legajoProfeAEliminar} ?")
+            profesor = profesores[indice]
+            print("Profesor a eliminar:")
+            print("-"*15)
+            print(f"Legajo: {profesor['Legajo']}")
+            print(f"Nombre: {profesor['Nombre']}")
+            print(f"Apellido: {profesor['Apellido']}")
+            print(f"DNI: {profesor['DNI']}")
+            print(f"Mail: {profesor['Mail']}")
+            print("-"*15)
+            decision = ingresarCadenas("Ingrese si o no: ")
+            while decision.lower() not in ["si", "no"]:
+                print("Error de ingreso. Se esperaba: si o no")
+                decision = ingresarCadenas("Ingrese si o no: ")
+
+            if decision.lower() == "si":
+                profesores.pop(indice)
+
+                with open(archivo,"w",encoding="UTF-8") as file:
+                    json.dump(profesores,file,ensure_ascii=False, indent=4)
+                print(f"Profesor con legajo {legajoProfeAEliminar} eliminado.")
+            else:
+                print("Operación cancelada por el usuario.")
+        else:
+            print(f"No se encontró un profesor con legajo {legajoProfeAEliminar}.")
+    
+    except(OSError) as error:
+        print(f"Error accediendo al archivo, {error}.")
+
+eliminarProfesorArchivosJSON("profesores.json")
 '''
 profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
             {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},

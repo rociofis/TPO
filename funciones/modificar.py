@@ -421,6 +421,8 @@ def modificarProfesoresArchivosJSON(archivo):
                 else:
                     LegajoEncontrado = True
                     print(f"Profesor encontrado con legajo {legajo}.")
+            #ESTO LO PODES RESUMIR HACIENDO UNA LISTA CON LOS LEGAJOS Y RECORRERLA Y SI EL LEGAJO ESTA QUE SE PUEDA MODIFICAR UN DATO
+            #PERO QUE EL LEGAJO NO SE PUEDA MODIFICAR
 
             while True:
                 print("\nDatos del profesor: ")

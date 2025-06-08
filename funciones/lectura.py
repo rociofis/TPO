@@ -16,3 +16,4 @@ def leerEvaluaciones(archivo):
             print(f"Error al cerrar el archivo {archivo}")
 
 leerEvaluaciones("evaluaciones.txt")
+

@@ -22,16 +22,9 @@
     },
     {
         "Legajo": 1004,
-        "Nombre": "Julian",
-        "Apellido": "Fernan",
-        "DNI": 9293233,
-        "Mail": "juafernan@gmail.com"
-    },
-    {
-        "Legajo": 1005,
-        "Nombre": "Julio",
-        "Apellido": "Lopez",
-        "DNI": 1000000,
-        "Mail": "JL@gmail.com"
+        "Nombre": "Tobias",
+        "Apellido": "Hernandez",
+        "DNI": 4300000,
+        "Mail": "tobiasher@gmail.com"
     }
 ]
