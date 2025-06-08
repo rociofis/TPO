@@ -12,6 +12,17 @@
 import json
 import re
 
+def ingresarDNI(mensaje):
+    while True:
+        try:
+            dni = int(input(mensaje))
+            if dni < 1000000 or dni > 99999999:
+                print("El DNI debe tener entre 7 y 8 dígitos.")
+            else:
+                return dni
+        except ValueError:
+            print("Se esperaba un numero entero para el DNI.")
+
 def validarOpciones(opciones, mensaje):
     while True:
         try:
@@ -399,33 +410,32 @@ def modificarEvaluacionArchivoSimple(nombre_archivo):
 #modificarEvaluacionArchivoSimple("evaluaciones.txt")
 
 
-def modificarProfesoresArchivosJSON(archivo):
+
+def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
     try:
         with open(archivo, "r", encoding="UTF-8") as datos:
-            profesores = json.load(datos)
+            entidad = json.load(datos)
 
         while True:
             print("\nLos legajos disponibles son:")
-            for profesor in profesores:
-                print(f"- {profesor['Legajo']}")
+            for enti in entidad:
+                print(f"- {enti['Legajo']}")
 
             LegajoEncontrado = False
             while not LegajoEncontrado:
-                legajo = ingresarNumeros("Ingrese el legajo del profesor a modificar: ")
+                legajo = ingresarNumeros(mensaje)
                 indice = -1
-                for i in range(len(profesores)):
-                    if profesores[i]['Legajo'] == legajo:
+                for i in range(len(entidad)):
+                    if entidad[i]['Legajo'] == legajo:
                         indice = i
                 if indice == -1:
                     print("El legajo no se encuentra en la lista.")
                 else:
                     LegajoEncontrado = True
-                    print(f"Profesor encontrado con legajo {legajo}.")
-            #ESTO LO PODES RESUMIR HACIENDO UNA LISTA CON LOS LEGAJOS Y RECORRERLA Y SI EL LEGAJO ESTA QUE SE PUEDA MODIFICAR UN DATO
-            #PERO QUE EL LEGAJO NO SE PUEDA MODIFICAR
+                    print(f"{tipoDato.capitalize()} encontrado con legajo {legajo}.")
 
             while True:
-                print("\nDatos del profesor: ")
+                print(f"\nDatos de {tipoDato}: ")
                 print(
                     "Legajo".ljust(10),
                     "Nombre".ljust(10),
@@ -434,14 +444,14 @@ def modificarProfesoresArchivosJSON(archivo):
                     "Mail"
                 )
                 print(
-                    str(profesores[indice]['Legajo']).ljust(10),
-                    profesores[indice]['Nombre'].ljust(10),
-                    profesores[indice]['Apellido'].ljust(12),
-                    str(profesores[indice]['DNI']).ljust(10),
-                    profesores[indice]['Mail']
+                    str(entidad[indice]['Legajo']).ljust(10),
+                    entidad[indice]['Nombre'].ljust(10),
+                    entidad[indice]['Apellido'].ljust(12),
+                    str(entidad[indice]['DNI']).ljust(10),
+                    entidad[indice]['Mail']
                 )
                 opcionesValidas = [1, 2, 3, 4, 5]
-                opcion = validarOpciones(opcionesValidas, "\nQué dato del profesor desea modificar?" \
+                opcion = validarOpciones(opcionesValidas, f"\nQué dato del {tipoDato} desea modificar?" \
                     "\n---------------------------" \
                     "\nOpción 1: Nombre" \
                     "\nOpción 2: Apellido" \
@@ -452,38 +462,38 @@ def modificarProfesoresArchivosJSON(archivo):
                     "\nQue opción desea elegir?: ")
 
                 if opcion == 1:
-                    print("El nombre actual es:", profesores[indice]["Nombre"])
-                    profesores[indice]["Nombre"] = ingresarCadenas("Nuevo nombre: ")
+                    print("El nombre actual es:", entidad[indice]["Nombre"])
+                    entidad[indice]["Nombre"] = ingresarCadenas("Nuevo nombre: ")
                 elif opcion == 2:
-                    print("El apellido actual es:", profesores[indice]["Apellido"])
-                    profesores[indice]["Apellido"] = ingresarCadenas("Nuevo apellido: ")
+                    print("El apellido actual es:", entidad[indice]["Apellido"])
+                    entidad[indice]["Apellido"] = ingresarCadenas("Nuevo apellido: ")
                 elif opcion == 3:
-                    print("El DNI actual es:", profesores[indice]["DNI"])
-                    profesores[indice]["DNI"] = ingresarNumeros("Nuevo DNI: ")
+                    print("El DNI actual es:", entidad[indice]["DNI"])
+                    entidad[indice]["DNI"] = ingresarDNI("Nuevo DNI: ")
                 elif opcion == 4:
-                    print("El mail actual es:", profesores[indice]["Mail"])
-                    profesores[indice]["Mail"] = validarMail2("Nuevo mail: ")
+                    print("El mail actual es:", entidad[indice]["Mail"])
+                    entidad[indice]["Mail"] = validarMail2("Nuevo mail: ")
                 elif opcion == 5:
-                    print(f"Saliendo de la modificacion del profesor con legajo {legajo}.")
+                    print(f"Saliendo de la modificacion de {tipoDato} con legajo {legajo}.")
                     break
 
                 if opcion in opcionesValidas[:-1]:  # Si no es la opción de salir
                     with open(archivo, 'w', encoding="UTF-8") as datos:
-                        json.dump(profesores, datos, ensure_ascii=False, indent=4)
+                        json.dump(entidad, datos, ensure_ascii=False, indent=4)
                     print("El dato se ha modificado correctamente.")
 
-            continuar = ingresarCadenas("¿Desea modificar otro profesor? (si/no): ").lower()
+            continuar = ingresarCadenas(mensaje2).lower()
             while continuar not in ["si", "no"]:
                 print("Respuesta no válida. Por favor, ingrese 'si' o 'no'.")
-                continuar = ingresarCadenas("¿Desea modificar otro profesor? (si/no): ").lower()
+                continuar = ingresarCadenas(mensaje2).lower()
             if continuar == "no":
-                print("Saliendo de la modificación de profesores.")
+                print("Saliendo de la modificación.")
                 break
             #PREGUNTAR SI ES VIABLE USAR SOLO 2 BREAKS EN ESTA FUNCION
             #NO INTERACTUAN ENTRE SI LOS BREAKS, POR LO QUE NO DEBERIA HABER PROBLEMAS
 
 
-            print("\nLista actualizada de profesores:")
+            print(f"\nLista actualizada de datos de {tipoDato} :")
             print(
                 "Legajo".ljust(10),
                 "Nombre".ljust(10),
@@ -491,16 +501,17 @@ def modificarProfesoresArchivosJSON(archivo):
                 "DNI".ljust(10),
                 "Mail"
             )
-            for prof in profesores:
+            for enti in entidad:
                 print(
-                    str(prof['Legajo']).ljust(10),
-                    prof['Nombre'].ljust(10),
-                    prof['Apellido'].ljust(12),
-                    str(prof['DNI']).ljust(10),
-                    prof['Mail']
+                    str(enti['Legajo']).ljust(10),
+                    enti['Nombre'].ljust(10),
+                    enti['Apellido'].ljust(12),
+                    str(enti['DNI']).ljust(10),
+                    enti['Mail']
                 )
 
     except Exception as e:
         print(f"Error: {e}")
 
-modificarProfesoresArchivosJSON("profesores.json")
+
+modificarArchivosJSON("profesores.json", "Ingrese el legajo del profesor a modificar: ", "¿Desea modificar otro profesor? (si/no): ", "profesor")
