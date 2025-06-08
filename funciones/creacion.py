@@ -17,13 +17,12 @@ evaluaciones = [[1, "15","03","2025", "1200001", "1204565", "Parcial", "Matemát
 cargarEvaluaciones(evaluaciones, "evaluaciones.txt")
 
 
-def cargarProfesores():
+def cargarArchivoJSON(entidad, archivo):
     try:
-        with open('profesores.json', 'w', encoding="UTF-8") as archivo:
-            json.dump(profesores, archivo, ensure_ascii=False, indent=4)
+        with open(archivo, 'w', encoding="UTF-8") as archivo:
+            json.dump(entidad, archivo, ensure_ascii=False, indent=4)
     except:
         print("No se pudo abrir el archivo")
-
 
 profesores = [
     {"Legajo": 1001, "Nombre": "Juan", "Apellido": "Perez", "DNI": 32123456, "Mail": "juan.perez@gmail.com"},
@@ -32,4 +31,12 @@ profesores = [
     {"Legajo": 1004, "Nombre": "Julian", "Apellido": "Fernan", "DNI": 929323, "Mail": "juafernan@gmail.com"}
 ]
 
-cargarProfesores()
+alumnos = [
+    {"Legajo":1200001, "Nombre": "Juan", "Apellido": "Martinez", "DNI": 32123789, "Mail": "juan.perez14@gmail.com"},
+    {"Legajo":1200002, "Nombre": "María", "Apellido": "Gómez", "DNI": 33456789, "Mail": "maria.gomez@yahoo.com"},
+    {"Legajo":1200003, "Nombre": "Lucas", "Apellido": "Fernández", "DNI": 31222333, "Mail": "lucas.fernandez@hotmail.com"},
+    {"Legajo":1200004, "Nombre": "Ana", "Apellido": "López", "DNI": 34566777, "Mail": "ana.lopez@gmail.com"}
+]
+
+cargarArchivoJSON(profesores, "profesores.json")
+cargarArchivoJSON(alumnos, "alumnos.json")

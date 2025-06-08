@@ -1,14 +1,14 @@
 [
     {
         "Legajo": 1001,
-        "Nombre": "Matias",
+        "Nombre": "Juan",
         "Apellido": "Perez",
         "DNI": 32123456,
         "Mail": "juan.perez@gmail.com"
     },
     {
         "Legajo": 1002,
-        "Nombre": "Felipe",
+        "Nombre": "Tomas",
         "Apellido": "Penny",
         "DNI": 2342332,
         "Mail": "tomm.penny@gmail.com"
@@ -22,6 +22,10 @@
     },
     {
         "Legajo": 1004,
+        "Nombre": "Julian",
+        "Apellido": "Fernan",
+        "DNI": 929323,
+        "Mail": "juafernan@gmail.com"
         "Nombre": "Tobias",
         "Apellido": "Hernandez",
         "DNI": 4300000,

@@ -415,16 +415,22 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
     try:
         with open(archivo, "r", encoding="UTF-8") as datos:
             entidad = json.load(datos)
+            entidad = json.load(datos)
 
         while True:
             print("\nLos legajos disponibles son:")
+            for enti in entidad:
+                print(f"- {enti['Legajo']}")
             for enti in entidad:
                 print(f"- {enti['Legajo']}")
 
             LegajoEncontrado = False
             while not LegajoEncontrado:
                 legajo = ingresarNumeros(mensaje)
+                legajo = ingresarNumeros(mensaje)
                 indice = -1
+                for i in range(len(entidad)):
+                    if entidad[i]['Legajo'] == legajo:
                 for i in range(len(entidad)):
                     if entidad[i]['Legajo'] == legajo:
                         indice = i
@@ -433,8 +439,10 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
                 else:
                     LegajoEncontrado = True
                     print(f"{tipoDato.capitalize()} encontrado con legajo {legajo}.")
+                    print(f"{tipoDato.capitalize()} encontrado con legajo {legajo}.")
 
             while True:
+                print(f"\nDatos de {tipoDato}: ")
                 print(f"\nDatos de {tipoDato}: ")
                 print(
                     "Legajo".ljust(10),
@@ -449,8 +457,14 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
                     entidad[indice]['Apellido'].ljust(12),
                     str(entidad[indice]['DNI']).ljust(10),
                     entidad[indice]['Mail']
+                    str(entidad[indice]['Legajo']).ljust(10),
+                    entidad[indice]['Nombre'].ljust(10),
+                    entidad[indice]['Apellido'].ljust(12),
+                    str(entidad[indice]['DNI']).ljust(10),
+                    entidad[indice]['Mail']
                 )
                 opcionesValidas = [1, 2, 3, 4, 5]
+                opcion = validarOpciones(opcionesValidas, f"\nQué dato del {tipoDato} desea modificar?" \
                 opcion = validarOpciones(opcionesValidas, f"\nQué dato del {tipoDato} desea modificar?" \
                     "\n---------------------------" \
                     "\nOpción 1: Nombre" \
@@ -464,35 +478,49 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
                 if opcion == 1:
                     print("El nombre actual es:", entidad[indice]["Nombre"])
                     entidad[indice]["Nombre"] = ingresarCadenas("Nuevo nombre: ")
+                    print("El nombre actual es:", entidad[indice]["Nombre"])
+                    entidad[indice]["Nombre"] = ingresarCadenas("Nuevo nombre: ")
                 elif opcion == 2:
+                    print("El apellido actual es:", entidad[indice]["Apellido"])
+                    entidad[indice]["Apellido"] = ingresarCadenas("Nuevo apellido: ")
                     print("El apellido actual es:", entidad[indice]["Apellido"])
                     entidad[indice]["Apellido"] = ingresarCadenas("Nuevo apellido: ")
                 elif opcion == 3:
                     print("El DNI actual es:", entidad[indice]["DNI"])
                     entidad[indice]["DNI"] = ingresarDNI("Nuevo DNI: ")
+                    print("El DNI actual es:", entidad[indice]["DNI"])
+                    entidad[indice]["DNI"] = ingresarDNI("Nuevo DNI: ")
                 elif opcion == 4:
                     print("El mail actual es:", entidad[indice]["Mail"])
                     entidad[indice]["Mail"] = validarMail2("Nuevo mail: ")
+                    print("El mail actual es:", entidad[indice]["Mail"])
+                    entidad[indice]["Mail"] = validarMail2("Nuevo mail: ")
                 elif opcion == 5:
+                    print(f"Saliendo de la modificacion de {tipoDato} con legajo {legajo}.")
                     print(f"Saliendo de la modificacion de {tipoDato} con legajo {legajo}.")
                     break
 
                 if opcion in opcionesValidas[:-1]:  # Si no es la opción de salir
                     with open(archivo, 'w', encoding="UTF-8") as datos:
                         json.dump(entidad, datos, ensure_ascii=False, indent=4)
+                        json.dump(entidad, datos, ensure_ascii=False, indent=4)
                     print("El dato se ha modificado correctamente.")
 
+            continuar = ingresarCadenas(mensaje2).lower()
             continuar = ingresarCadenas(mensaje2).lower()
             while continuar not in ["si", "no"]:
                 print("Respuesta no válida. Por favor, ingrese 'si' o 'no'.")
                 continuar = ingresarCadenas(mensaje2).lower()
+                continuar = ingresarCadenas(mensaje2).lower()
             if continuar == "no":
+                print("Saliendo de la modificación.")
                 print("Saliendo de la modificación.")
                 break
             #PREGUNTAR SI ES VIABLE USAR SOLO 2 BREAKS EN ESTA FUNCION
             #NO INTERACTUAN ENTRE SI LOS BREAKS, POR LO QUE NO DEBERIA HABER PROBLEMAS
 
 
+            print(f"\nLista actualizada de datos de {tipoDato} :")
             print(f"\nLista actualizada de datos de {tipoDato} :")
             print(
                 "Legajo".ljust(10),
@@ -502,7 +530,13 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
                 "Mail"
             )
             for enti in entidad:
+            for enti in entidad:
                 print(
+                    str(enti['Legajo']).ljust(10),
+                    enti['Nombre'].ljust(10),
+                    enti['Apellido'].ljust(12),
+                    str(enti['DNI']).ljust(10),
+                    enti['Mail']
                     str(enti['Legajo']).ljust(10),
                     enti['Nombre'].ljust(10),
                     enti['Apellido'].ljust(12),
@@ -513,5 +547,7 @@ def modificarArchivosJSON(archivo, mensaje, mensaje2, tipoDato):
     except Exception as e:
         print(f"Error: {e}")
 
+
+modificarArchivosJSON("profesores.json", "Ingrese el legajo del profesor a modificar: ", "¿Desea modificar otro profesor? (si/no): ", "profesor")
 
 modificarArchivosJSON("profesores.json", "Ingrese el legajo del profesor a modificar: ", "¿Desea modificar otro profesor? (si/no): ", "profesor")
