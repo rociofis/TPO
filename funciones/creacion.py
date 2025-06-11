@@ -32,10 +32,10 @@ profesores = [
 ]
 
 alumnos = [
-    {"Legajo":1200001, "Nombre": "Juan", "Apellido": "Martinez", "DNI": 32123789, "Mail": "juan.perez14@gmail.com"},
-    {"Legajo":1200002, "Nombre": "María", "Apellido": "Gómez", "DNI": 33456789, "Mail": "maria.gomez@yahoo.com"},
-    {"Legajo":1200003, "Nombre": "Lucas", "Apellido": "Fernández", "DNI": 31222333, "Mail": "lucas.fernandez@hotmail.com"},
-    {"Legajo":1200004, "Nombre": "Ana", "Apellido": "López", "DNI": 34566777, "Mail": "ana.lopez@gmail.com"}
+    {"Legajo":1201, "Nombre": "Juan", "Apellido": "Martinez", "DNI": 32123789, "Mail": "juan.perez14@gmail.com"},
+    {"Legajo":1202, "Nombre": "María", "Apellido": "Gómez", "DNI": 33456789, "Mail": "maria.gomez@yahoo.com"},
+    {"Legajo":1203, "Nombre": "Lucas", "Apellido": "Fernández", "DNI": 31222333, "Mail": "lucas.fernandez@hotmail.com"},
+    {"Legajo":1204, "Nombre": "Ana", "Apellido": "López", "DNI": 34566777, "Mail": "ana.lopez@gmail.com"}
 ]
 
 cargarArchivoJSON(profesores, "profesores.json")

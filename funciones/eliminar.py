@@ -157,48 +157,120 @@ def eliminarProfesor(profesores,legajoProfesor):
 
 def eliminarProfesorArchivosJSON(archivo): #no hace falta pasar profesores como parametro
     try:
-        with open(archivo, "r",encoding="UTF-8") as file:
-            profesores = json.load(file)
-        if not profesores:
-            raise AssertionError("El archivo esta vacío, no hay profesores para eliminar")
-        legajos = [profesor["Legajo"] for profesor in profesores]
-        print("Los legajos disponibles son:")
-        for legajo in legajos:
-            print(f"- {legajo}")
-        legajoProfeAEliminar = ingresarNumeros("Ingrese el legajo del profesor que se desea eliminar: ")
-        if legajoProfeAEliminar in legajos:
-            indice = legajos.index(legajoProfeAEliminar)
-            print("ATENCIÓN !!!")
-            print(f"Esta seguro que desea eliminar el profesor con legajo {legajoProfeAEliminar} ?")
-            profesor = profesores[indice]
-            print("Profesor a eliminar:")
-            print("-"*15)
-            print(f"Legajo: {profesor['Legajo']}")
-            print(f"Nombre: {profesor['Nombre']}")
-            print(f"Apellido: {profesor['Apellido']}")
-            print(f"DNI: {profesor['DNI']}")
-            print(f"Mail: {profesor['Mail']}")
-            print("-"*15)
-            decision = ingresarCadenas("Ingrese si o no: ")
-            while decision.lower() not in ["si", "no"]:
-                print("Error de ingreso. Se esperaba: si o no")
+        bandera = True
+        while bandera:
+            with open(archivo, "r",encoding="UTF-8") as file:
+                profesores = json.load(file)
+            if not profesores:
+                assert False
+            legajos = [profesor["Legajo"] for profesor in profesores]
+            print("Los legajos disponibles son:")
+            for legajo in legajos:
+                print(f"- {legajo}")
+            legajoProfeAEliminar = ingresarNumeros("Ingrese el legajo del profesor que se desea eliminar: ")
+            if legajoProfeAEliminar in legajos:
+                indice = legajos.index(legajoProfeAEliminar)
+                print("ATENCIÓN !!!")
+                print(f"Esta seguro que desea eliminar el profesor con legajo {legajoProfeAEliminar} ?")
+                profesor = profesores[indice]
+                print("Profesor a eliminar:")
+                print("-"*15)
+                print(f"Legajo: {profesor['Legajo']}")
+                print(f"Nombre: {profesor['Nombre']}")
+                print(f"Apellido: {profesor['Apellido']}")
+                print(f"DNI: {profesor['DNI']}")
+                print(f"Mail: {profesor['Mail']}")
+                print("-"*15)
                 decision = ingresarCadenas("Ingrese si o no: ")
+                while decision.lower() not in ["si", "no"]:
+                    print("Error de ingreso. Se esperaba: si o no")
+                    decision = ingresarCadenas("Ingrese si o no: ")
 
-            if decision.lower() == "si":
-                profesores.pop(indice)
+                if decision.lower() == "si":
+                    profesores.pop(indice)
 
-                with open(archivo,"w",encoding="UTF-8") as file:
-                    json.dump(profesores,file,ensure_ascii=False, indent=4)
-                print(f"Profesor con legajo {legajoProfeAEliminar} eliminado.")
+                    with open(archivo,"w",encoding="UTF-8") as file:
+                        json.dump(profesores,file,ensure_ascii=False, indent=4)
+                    print(f"Profesor con legajo {legajoProfeAEliminar} eliminado.")
+                else:
+                    print("Operación cancelada por el usuario.")
             else:
-                print("Operación cancelada por el usuario.")
-        else:
-            print(f"No se encontró un profesor con legajo {legajoProfeAEliminar}.")
-    
+                print(f"No se encontró un profesor con legajo {legajoProfeAEliminar}.")
+            continuar = ingresarCadenas("Desea eliminar otro profesor? (si/no): ")
+            while continuar.lower() not in ["si","no"]:
+                print("Error de ingreso se esperaba: si o no")
+                continuar = ingresarCadenas("Desea eliminar otro profesor? (si/no): ")
+            if continuar.lower() == "no":
+                bandera = False
+                print("Saliendo de la función de eliminar profesor...")
+    except AssertionError:
+        print("El archivo está vacío, no hay profesores para eliminar")
     except(OSError) as error:
         print(f"Error accediendo al archivo, {error}.")
 
-eliminarProfesorArchivosJSON("profesores.json")
+def eliminarArchivosJSON(archivo,tipoDato): #no hace falta pasar profesores como parametro
+    try:
+        bandera = True
+        while bandera:
+            with open(archivo, "r",encoding="UTF-8") as file:
+                entidad = json.load(file)
+            if not entidad:
+                assert False
+            legajos = [enti["Legajo"] for enti in entidad]
+            print("Los legajos disponibles son:")
+            for legajo in legajos:
+                print(f"- {legajo}")
+            legajoAEliminar = ingresarNumeros(f"Ingrese el legajo del {tipoDato} que se desea eliminar: ")
+            if legajoAEliminar in legajos:
+                indice = legajos.index(legajoAEliminar)
+                print("ATENCIÓN !!!")
+                print(f"Esta seguro que desea eliminar el {tipoDato} con legajo {legajoAEliminar} ?")
+                enti = entidad[indice]
+                print(f"{tipoDato.capitalize()} a eliminar:")
+                print("-"*15)
+                print(f"Legajo: {enti['Legajo']}")
+                print(f"Nombre: {enti['Nombre']}")
+                print(f"Apellido: {enti['Apellido']}")
+                print(f"DNI: {enti['DNI']}")
+                print(f"Mail: {enti['Mail']}")
+                print("-"*15)
+                decision = ingresarCadenas("Ingrese si o no: ")
+                while decision.lower() not in ["si", "no"]:
+                    print("Error de ingreso. Se esperaba: si o no")
+                    decision = ingresarCadenas("Ingrese si o no: ")
+
+                if decision.lower() == "si":
+                    entidad.pop(indice)
+
+                    with open(archivo,"w",encoding="UTF-8") as file:
+                        json.dump(entidad,file,ensure_ascii=False, indent=4)
+                    print(f"{tipoDato} con legajo {legajoAEliminar} eliminado.")
+                else:
+                    print("Operación cancelada por el usuario.")
+            else:
+                print(f"No se encontró un {tipoDato} con legajo {legajoAEliminar}.")
+            continuar = ingresarCadenas(f"Desea eliminar otro {tipoDato}? (si/no): ")
+            while continuar.lower() not in ["si","no"]:
+                print("Error de ingreso se esperaba: si o no")
+                continuar = ingresarCadenas("Desea eliminar otro {tipoDato}? (si/no): ")
+            if continuar.lower() == "no":
+                bandera = False
+                print(f"Saliendo de la función de eliminar {tipoDato}...")
+    except AssertionError:
+        print(f"El archivo está vacío, no hay {tipoDato}s para eliminar")
+    except(OSError) as error:
+        print(f"Error accediendo al archivo, {error}.")
+
+eliminarArchivosJSON("alumnos.json","alumno")
+
+
+
+'''
+COSAS PARA HACER:
+Peguntarle al profe si en la funcion eliminar esta bien abrir el archivo cada vez que la persona quiere modificar al profesor, alumno, es decir, a la entidad
+Que la salida por pantalla o sea siempre tabla o siempre el mismo formato
+Llamar todo en el main
+'''
 '''
 profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
             {"Legajo": 120444, "Nombre":"Tomas", "Apellido":"Penny", "DNI":2342332, "Mail":"tomm.penny@gmail.com"},
