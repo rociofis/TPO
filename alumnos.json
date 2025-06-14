@@ -1,5 +1,19 @@
 [
     {
+        "Legajo": 1201,
+        "Nombre": "Juan",
+        "Apellido": "Martinez",
+        "DNI": 32123789,
+        "Mail": "juan.perez14@gmail.com"
+    },
+    {
+        "Legajo": 1202,
+        "Nombre": "María",
+        "Apellido": "Gómez",
+        "DNI": 33456789,
+        "Mail": "maria.gomez@yahoo.com"
+    },
+    {
         "Legajo": 1203,
         "Nombre": "Lucas",
         "Apellido": "Fernández",

@@ -263,6 +263,21 @@ def eliminarArchivosJSON(archivo,tipoDato): #no hace falta pasar profesores como
 
 eliminarArchivosJSON("alumnos.json","alumno")
 
+import re
+
+def validarMateria(mensaje):
+    while True:
+        try:
+            materia = input(mensaje)
+            if re.search("[0-9]$",materia):
+                materia[1:]
+            materia = materia.strip()  # Elimina espacios al inicio y al final
+            assert(materia.isalpha())
+            break
+        except AssertionError :
+            print("Se esperaba que ingrese una cadena de texto")
+            print("Vuelva a ingresarlo!")
+    return materia
 
 
 '''
@@ -279,6 +294,7 @@ Peguntarle al profe si en la funcion eliminar esta bien abrir el archivo cada ve
 Que la salida por pantalla o sea siempre tabla o siempre el mismo formato
 Llamar todo en el main
 Hacer una prueba unitaria nueva o readaptar la de eliminar
+Poner en un archivo todas las validaciones
 Volver a usar tuplas 
 '''
 '''

@@ -1,7 +1,7 @@
 [
     {
         "Legajo": 1001,
-        "Nombre": "Julian",
+        "Nombre": "Juan",
         "Apellido": "Perez",
         "DNI": 32123456,
         "Mail": "juan.perez@gmail.com"
@@ -25,6 +25,6 @@
         "Nombre": "Julian",
         "Apellido": "Fernan",
         "DNI": 929323,
-        "Mail": "juanfernandez@gmail.com"
+        "Mail": "juafernan@gmail.com"
     }
 ]

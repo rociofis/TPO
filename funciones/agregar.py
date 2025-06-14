@@ -104,6 +104,24 @@ def validarMail2(mensaje):
 #Lo cual generara el Assertion Error y vuelve al while hasta que el usuario ingrese el mail de la manera que se lo soliciata
 #
 
+
+import re
+
+def validarMateria(mensaje):
+    while True:
+        try:
+            materia = input(mensaje)
+            if re.search(r"[0-9]$",materia):
+                materiaValidacion= materia[:-1].strip()
+            partes = materiaValidacion.split()
+            for p in partes:
+                assert(p.isalpha())
+            break
+        except AssertionError :
+            print("Se esperaba que ingrese una cadena de texto")
+            print("Vuelva a ingresarlo!")
+    return materia
+
 #CREACIÓN DE LA MATRIZ ALUMNOS
 def crearMatrizAlumnos(alumnos):
     # Inicializar la matriz
@@ -213,21 +231,24 @@ def agregarEvaluacionArchivos(archivo):
                 print("AGREGAR EVALUACIÓN")
 
                 IDEvaluacion = ingresarNumeros("Ingrese el ID de la evaluación: ")
-                dia=ingresarNumeros("ingrese dia: ")
-                mes=ingresarNumeros("ingrese el mes: ")
-                anio=ingresarNumeros("ingrese el año:")
+                dia=ingresarNumeros("Ingrese dia: ")
+                mes=ingresarNumeros("Ingrese el mes: ")
+                anio=ingresarNumeros("Ingrese el año: ")
                 fecha = (dia, mes, anio)
                 legajoAlumno = ingresarNumeros("Ingrese el legajo del alumno: ")
                 legajoProfesor = ingresarNumeros("Ingrese el legajo del profesor: ")
-                instanciaEv = ingresarCadenas("Ingrese la instancia evaluativa(Parcial/Final/Recuperatorio): ").strip()
-                materia = ingresarCadenas("Ingrese la materia: ").strip()
+                instanciaEv = ingresarCadenas("Ingrese la instancia evaluativa(Parcial/Final/Recuperatorio): ").strip().capitalize()
+                while instanciaEv not in ["Parcial","Final","Recuperatorio"]:
+                    print("Instancia ingresada no valida! Vuelva a ingresar una de las opciones Parcial/Final/Recuperatorio: ")
+                    instanciaEv = ingresarCadenas("Ingrese la instancia evaluativa: ").strip().capitalize()
+                materia = validarMateria("Ingrese la materia: ").strip()
                 if len(materia) > 10:
                     palabras = materia.split()
                     if len(palabras) > 1:
                         if palabras[1].lower() == "de" and len(palabras) >2:
                             materiaReducida = palabras[0][:4] + " " + palabras[2]
                         else:
-                            materiaReducida = palabras[0] + " " + palabras[1][:3]
+                            materiaReducida = palabras[0] + " " + palabras[1][:3] + " " +palabras[2]
                     else:
                         materiaReducida = materia
                 else:
@@ -261,7 +282,7 @@ def agregarEvaluacionArchivos(archivo):
     except OSError:
         print("Error al acceder al archivo")
 
-#agregarEvaluacionArchivos("evaluaciones.txt")
+agregarEvaluacionArchivos("evaluaciones.txt")
 
 
 #MODIFIQUE ESTA FUNCION!!!!!!!!
@@ -372,7 +393,7 @@ def agregarProfesorArchivosJSON(archivo):
     except Exception as e:
         print(f"Error: {e}")
 
-agregarProfesorArchivosJSON("profesores.json")
+#agregarProfesorArchivosJSON("profesores.json")
 
 
 #profesores = []
