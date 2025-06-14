@@ -38,3 +38,5 @@ def imprimirMatrizEv(evaluaciones):
         fecha_str = (f"{fila[1]}/{fila[2]}/{fila[3]}")
         # Imprimir los datos de la fila
         print(str(fila[0]).ljust(20), str(fecha_str).ljust(15),str(fila[4]).ljust(20),str(fila[5]).ljust(20), fila[6].ljust(20), str(fila[7]).ljust(20), str(fila[8]))
+
+

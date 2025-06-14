@@ -488,12 +488,13 @@ def modificarArchivosJSON(archivo, tipoDato):
 
             print(f"\nLista actualizada de datos de {tipoDato} :")
             print(
-                "Legajo".ljust(10),
-                "Nombre".ljust(10),
-                "Apellido".ljust(12),
-                "DNI".ljust(10),
+                "Legajo".ljust(15),
+                "Nombre".ljust(15),
+                "Apellido".ljust(15),
+                "DNI".ljust(15),
                 "Mail"
             )
+            '''
             for enti in entidad:
                 print(
                     str(enti['Legajo']).ljust(10),
@@ -502,10 +503,17 @@ def modificarArchivosJSON(archivo, tipoDato):
                     str(enti['DNI']).ljust(10),
                     enti['Mail']
                 )
+            '''
+            mostrarListaRecusividad(entidad)
     except AssertionError:
         print(f"El archivo está vacío, no hay {tipoDato}s para modificar")
     except Exception as e:
         print(f"Error: {e}")
+
+def mostrarListaRecusividad(lista):
+    if len(lista)>0:
+        print(str(lista[0]["Legajo"]).ljust(15), lista[0]["Nombre"].ljust(15), lista[0]["Apellido"].ljust(15), str(lista[0]["DNI"]).ljust(15), lista[0]["Mail"].ljust(10))
+        mostrarListaRecusividad(lista[1:])
 
 #print("El legajo no se encuentra en la lista.")
 

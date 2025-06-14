@@ -266,10 +266,20 @@ eliminarArchivosJSON("alumnos.json","alumno")
 
 
 '''
+
+def leerMatriaRecursividad(materia):
+    if len(materia)==0:
+        return 0
+    else:
+        letra= materia[0].lower()
+        if letra in range(1,10):
+
 COSAS PARA HACER:
 Peguntarle al profe si en la funcion eliminar esta bien abrir el archivo cada vez que la persona quiere modificar al profesor, alumno, es decir, a la entidad
 Que la salida por pantalla o sea siempre tabla o siempre el mismo formato
 Llamar todo en el main
+Hacer una prueba unitaria nueva o readaptar la de eliminar
+Volver a usar tuplas 
 '''
 '''
 profesores = [{"Legajo": 120333, "Nombre":"Juan", "Apellido":"Pérez", "DNI":32123456, "Mail":"juan.perez@gmail.com"},
